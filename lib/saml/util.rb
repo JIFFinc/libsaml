@@ -42,7 +42,10 @@ module Saml
         message.add_signature
         document = Xmldsig::SignedDocument.new(message.send("to_#{format}"))
         #changing issuer to entity id instead of internal provider store id
-        document.document.at_xpath("/samlp:Response/saml:Issuer/text()").content = message.issuer.sub(/_idp$/,'')
+        el = document.document.at_xpath("/samlp:Response/saml:Issuer/text()")
+        if el
+          el.content = message.issuer.sub(/_idp$/,'')
+        end
         if block_given?
           document.sign(&block)
         else
