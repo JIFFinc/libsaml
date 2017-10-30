@@ -40,7 +40,8 @@ module Saml
 
       def sign_xml(message, format = :xml, &block)
         message.add_signature
-	message.assertions[0].issuer = message.assertions[0].issuer.sub(/_idp$/,'') if message.assertions
+        #changing issuer to entity id instead of internal provider store id
+	      message.assertions[0].issuer = message.assertions[0].issuer.sub(/_idp$/,'') if message.assertions[0]
         document = Xmldsig::SignedDocument.new(message.send("to_#{format}"))
         #changing issuer to entity id instead of internal provider store id
         document.document.at_xpath("/samlp:Response/saml:Issuer/text()").content = message.issuer.sub(/_idp$/,'')
