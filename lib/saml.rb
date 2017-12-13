@@ -193,7 +193,7 @@ module Saml
     if current_provider.entity_id == entity_id
       current_provider
     else
-      current_store.find_by_entity_id(entity_id) || current_store.find_by_entity_id("#{entity_id}_idp") || raise(Saml::Errors::InvalidProvider.new("Cannot find provider with entity_id: #{entity_id}"))
+      current_store.find_by_entity_id(entity_id) || raise(Saml::Errors::InvalidProvider.new("Cannot find provider with entity_id: #{entity_id}"))
     end
   end
 
