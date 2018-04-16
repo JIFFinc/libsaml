@@ -14,7 +14,7 @@ module Saml
     has_one :requested_authn_context, Saml::Elements::RequestedAuthnContext
 
     validates :force_authn, :inclusion => [true, false, nil]
-    validates :assertion_consumer_service_index, :numericality => true, :if => "assertion_consumer_service_index.present?"
+    validates :assertion_consumer_service_index, :numericality => true, if: -> { assertion_consumer_service_index.present? }
 
     validate :check_assertion_consumer_service
 
